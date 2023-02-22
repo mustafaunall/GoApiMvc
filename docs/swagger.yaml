@@ -1,0 +1,130 @@
+basePath: /api/v1
+definitions:
+  request.CreateProductRequest:
+    properties:
+      name:
+        maxLength: 200
+        minLength: 1
+        type: string
+    required:
+    - name
+    type: object
+  request.UpdateProductRequest:
+    properties:
+      id:
+        type: integer
+      name:
+        maxLength: 200
+        minLength: 1
+        type: string
+    required:
+    - id
+    - name
+    type: object
+  response.Response:
+    properties:
+      code:
+        type: integer
+      data: {}
+      status:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: Api Description
+  title: Test Api
+  version: "1.0"
+paths:
+  /product:
+    get:
+      description: Return list of product.
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: Get All product.
+      tags:
+      - product
+    post:
+      description: Save product data in Db.
+      parameters:
+      - description: Create product
+        in: body
+        name: product
+        required: true
+        schema:
+          $ref: '#/definitions/request.CreateProductRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: Create product
+      tags:
+      - product
+  /product/{productId}:
+    delete:
+      description: Remove product data by id.
+      parameters:
+      - description: Product ID for Delete
+        in: path
+        name: productId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: Delete product
+      tags:
+      - product
+    get:
+      description: Return the that who productId value matches id.
+      parameters:
+      - description: update product by id
+        in: path
+        name: productId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: Get Single product by id.
+      tags:
+      - product
+    patch:
+      description: Update product data.
+      parameters:
+      - description: update product by id
+        in: path
+        name: productId
+        required: true
+        type: string
+      - description: Update product
+        in: body
+        name: product
+        required: true
+        schema:
+          $ref: '#/definitions/request.UpdateProductRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: Update product
+      tags:
+      - product
+swagger: "2.0"
